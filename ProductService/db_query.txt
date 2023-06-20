@@ -1,0 +1,4 @@
+show databases;
+use product_db;
+show tables;
+select * from product;
