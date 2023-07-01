@@ -8,6 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -31,9 +32,15 @@ public class ProductController {
     }
 
     @PostMapping
-    public ResponseEntity<Long> saveEmployee(@RequestBody ProductRequestModel product){
+    public ResponseEntity<Long> saveEmployee(@RequestBody @Valid ProductRequestModel product){
         long productId= productService.saveEmployee(product);
         return new ResponseEntity<>(productId, HttpStatus.CREATED);
+    }
+
+    @PutMapping("/reduceQuantity/{id}")
+    public ResponseEntity<Void> updateQuantity(@PathVariable("id") long productId, @RequestParam long quantity){
+        productService.updateQuantity(productId,quantity);
+         return new ResponseEntity<>(HttpStatus.OK);
     }
 
 

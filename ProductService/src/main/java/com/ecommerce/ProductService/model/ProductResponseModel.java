@@ -16,6 +16,4 @@ public class ProductResponseModel {
     private String productName;
     private long price;
     private long quantity;
-
-
 }
