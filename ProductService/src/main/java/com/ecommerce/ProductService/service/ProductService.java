@@ -12,4 +12,6 @@ public interface ProductService {
     long saveEmployee(ProductRequestModel product);
 
     ProductResponseModel getProductById(long id);
+
+    void updateQuantity(long productId, long quantity);
 }

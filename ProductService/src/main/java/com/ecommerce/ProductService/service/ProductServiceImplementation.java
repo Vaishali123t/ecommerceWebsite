@@ -49,11 +49,29 @@ public class ProductServiceImplementation implements ProductService{
     @Override
     public ProductResponseModel getProductById(long id){
 
+        log.info("get product by id "+ id);
         ProductResponseModel product= new ProductResponseModel();
         Product productEntity= productRepository.findById(id)
                 .orElseThrow(()-> new ProductServiceException("Product with given id not found","PRODUCT_NOT_FOUND"));
         BeanUtils.copyProperties(productEntity,product);
 
         return product;
+    }
+
+    @Override
+    public void updateQuantity(long productId, long quantity) {
+
+        log.info("Reduce quantity {} for Id {}",quantity,productId);
+        // check whether productId is present or not
+        Product product= productRepository.findById(productId)
+                .orElseThrow(()->new ProductServiceException("Product with given id not found","PRODUCT_NOT_FOUND"));
+
+        // if productId is present check whether required quantity is there or not
+        if(product.getQuantity()<quantity) throw new ProductServiceException("Required Quantity is greater than quantity present","REQUIRED_QUANTITY_NOT_AVAILABLE");
+
+        product.setQuantity(product.getQuantity()-quantity);
+        log.info("Product quantity reduced");
+        productRepository.save(product);
+
     }
 }
