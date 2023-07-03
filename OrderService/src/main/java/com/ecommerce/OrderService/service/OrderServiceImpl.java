@@ -23,6 +23,9 @@ public class OrderServiceImpl implements OrderService{
     @Autowired
     private OrderRepository orderRepository;
 
+    @Autowired
+    private RestTemplate restTemplate;
+
     @Override
     public Long addOrder(OrderRequest orderRequest) {
 
@@ -37,7 +40,7 @@ public class OrderServiceImpl implements OrderService{
                                                 .quantity(orderRequest.getQuantity())
                                                         .orderDate(Instant.now())
                                                                 .build();
-        RestTemplate restTemplate= new RestTemplate();
+//        RestTemplate restTemplate= new RestTemplate();
         HttpHeaders headers = new HttpHeaders();
         HttpEntity<String> requestEntity = new HttpEntity<String>(headers);
         String productServiceUrl= "http://PRODUCT-SERVICE/product/reduceQuantity/"+ orderRequest.getProductId()+"/?quantity="+orderRequest.getQuantity();
@@ -76,7 +79,7 @@ public class OrderServiceImpl implements OrderService{
 
         // now call product service to get the name of product
 
-        RestTemplate restTemplate= new RestTemplate();
+//        RestTemplate restTemplate= new RestTemplate();
 
         OrderResponse.ProductDetails response=restTemplate.getForObject("http://PRODUCT-SERVICE/product/getById/"+productId, OrderResponse.ProductDetails.class);
 
