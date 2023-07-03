@@ -40,7 +40,7 @@ public class OrderServiceImpl implements OrderService{
         RestTemplate restTemplate= new RestTemplate();
         HttpHeaders headers = new HttpHeaders();
         HttpEntity<String> requestEntity = new HttpEntity<String>(headers);
-        String productServiceUrl= "http://localhost:8080/product/reduceQuantity/"+ orderRequest.getProductId()+"/?quantity="+orderRequest.getQuantity();
+        String productServiceUrl= "http://PRODUCT-SERVICE/product/reduceQuantity/"+ orderRequest.getProductId()+"/?quantity="+orderRequest.getQuantity();
 //        ResponseEntity<Void> productServiceResponse= restTemplate.put(productServiceUrl,ResponseEntity<>.class);
             ResponseEntity<Void> productServiceResponse= restTemplate.exchange(productServiceUrl, HttpMethod.PUT, requestEntity, Void.class);
             if(productServiceResponse.getStatusCode().is2xxSuccessful()){
@@ -78,7 +78,7 @@ public class OrderServiceImpl implements OrderService{
 
         RestTemplate restTemplate= new RestTemplate();
 
-        OrderResponse.ProductDetails response=restTemplate.getForObject("http://localhost:8080/product/getById/"+productId, OrderResponse.ProductDetails.class);
+        OrderResponse.ProductDetails response=restTemplate.getForObject("http://PRODUCT-SERVICE/product/getById/"+productId, OrderResponse.ProductDetails.class);
 
         log.info("Response from product/getById is fine");
 
@@ -92,5 +92,9 @@ public class OrderServiceImpl implements OrderService{
                 .build();
 
         return orderResponse;
+    }
+
+    public OrderRepository getOrderRepository() {
+        return orderRepository;
     }
 }
