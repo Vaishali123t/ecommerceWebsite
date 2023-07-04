@@ -2,6 +2,7 @@ package com.ecommerce.OrderService.service;
 
 import com.ecommerce.OrderService.entity.Order;
 import com.ecommerce.OrderService.exception.OrderNotFoundException;
+import com.ecommerce.OrderService.external.serviceCalls.ExternalServiceCall;
 import com.ecommerce.OrderService.model.ErrorResponse;
 import com.ecommerce.OrderService.model.OrderRequest;
 import com.ecommerce.OrderService.model.OrderResponse;
@@ -40,13 +41,13 @@ public class OrderServiceImpl implements OrderService{
                                                 .quantity(orderRequest.getQuantity())
                                                         .orderDate(Instant.now())
                                                                 .build();
-//        RestTemplate restTemplate= new RestTemplate();
-        HttpHeaders headers = new HttpHeaders();
-        HttpEntity<String> requestEntity = new HttpEntity<String>(headers);
+
         String productServiceUrl= "http://PRODUCT-SERVICE/product/reduceQuantity/"+ orderRequest.getProductId()+"/?quantity="+orderRequest.getQuantity();
-//        ResponseEntity<Void> productServiceResponse= restTemplate.put(productServiceUrl,ResponseEntity<>.class);
-            ResponseEntity<Void> productServiceResponse= restTemplate.exchange(productServiceUrl, HttpMethod.PUT, requestEntity, Void.class);
-            if(productServiceResponse.getStatusCode().is2xxSuccessful()){
+
+        ExternalServiceCall ex= new  ExternalServiceCall();
+        ResponseEntity<Void> productServiceResponse= ex.reduceQuantityOfProduct(productServiceUrl,restTemplate);
+
+        if(productServiceResponse.getStatusCode().is2xxSuccessful()){
                 orderRepository.save(order);
                 log.info("Order placed successfully with order id {}",order.getId());
             }
@@ -79,9 +80,10 @@ public class OrderServiceImpl implements OrderService{
 
         // now call product service to get the name of product
 
-//        RestTemplate restTemplate= new RestTemplate();
+        String url= "http://PRODUCT-SERVICE/product/getById/"+productId;
+        ExternalServiceCall ex= new ExternalServiceCall();
 
-        OrderResponse.ProductDetails response=restTemplate.getForObject("http://PRODUCT-SERVICE/product/getById/"+productId, OrderResponse.ProductDetails.class);
+        OrderResponse.ProductDetails response= ex.getProductDetails(url,restTemplate);
 
         log.info("Response from product/getById is fine");
 
