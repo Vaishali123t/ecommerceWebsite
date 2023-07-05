@@ -11,7 +11,7 @@ spring:
     hibernate:
       ddl-auto: update
   application:
-    name: order-service
+    name: ORDER-SERVICE
 
 eureka:
   instance:
@@ -24,3 +24,23 @@ eureka:
       defaultZone: ${defaultZone:http://localhost:8671/eureka}
   server:
     port: 8671
+
+resilience4j:
+  retry:
+  instances:
+    product-service-retry:
+      max-attempts: 3
+      wait-duration: 5s
+      enable-exponential-backoff: true
+      exponential-backoff-multiplier: 2
+  circuitbreaker:
+    instances:
+      product-service-circuit-breaker:
+        wait-duration-in-open-state: 1m
+        permitted-number-of-calls-in-half-open-state: 3
+        sliding-window-type: count-based
+        sliding-window-size: 5
+        minimum-number-of-calls: 5
+        slow-call-duration-threshold: 10s
+        slow-call-rate-threshold: 60
+        failure-rate-threshold: 60
