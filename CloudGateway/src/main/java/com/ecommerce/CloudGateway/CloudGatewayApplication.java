@@ -6,9 +6,12 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.circuitbreaker.resilience4j.Resilience4JCircuitBreakerFactory;
 import org.springframework.cloud.circuitbreaker.resilience4j.Resilience4JConfigBuilder;
 import org.springframework.cloud.client.circuitbreaker.Customizer;
+import org.springframework.cloud.client.loadbalancer.LoadBalanced;
 import org.springframework.cloud.gateway.filter.ratelimit.KeyResolver;
 import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
 import org.springframework.context.annotation.Bean;
+import org.springframework.web.client.RestTemplate;
+import org.springframework.web.reactive.function.client.WebClient;
 import reactor.core.publisher.Mono;
 
 @SpringBootApplication
@@ -18,7 +21,6 @@ public class CloudGatewayApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(CloudGatewayApplication.class, args);
 	}
-
 
 	@Bean
 	KeyResolver userKeySolver(){
@@ -36,4 +38,16 @@ public class CloudGatewayApplication {
 						.circuitBreakerConfig(CircuitBreakerConfig.ofDefaults())
 						.build());
     }
+
+	@Bean
+	@LoadBalanced
+	public RestTemplate getRestTemplate() { // not used currently
+		return new RestTemplate();
+	}
+
+	@Bean
+	public WebClient.Builder getWebClientBuilder(){ // not used currently
+		return WebClient.builder();
+	}
+
 }

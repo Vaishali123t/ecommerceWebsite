@@ -6,7 +6,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import java.util.Collection;
 
 
-public class CustomUserDetails implements UserDetails { // this class is used to implement UserDetails
+public class CustomUserDetails implements UserDetails { // this class is used to implement UserDetails and authentication
 
 
     private String username;
