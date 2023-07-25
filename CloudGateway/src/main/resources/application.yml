@@ -12,27 +12,19 @@ spring:
           predicates:
             - Path=/orders/**
           filters:
-            - name: CircuitBreaker
-              args:
-                name: ORDER-SERVICE
-                fallbackuri: forward:/orderServiceFallback
-            - name: RequestRateLimiter
-              args:
-                redis-rate-limiter.replenishRate: 1
-                redis-rate-limiter.burstCapacity: 1
+            - name: AuthenticationFilter
+
         - id: PRODUCT-SERVICE
           uri: lb://PRODUCT-SERVICE
           predicates:
             - Path=/product/**
           filters:
-            - name: CircuitBreaker
-              args:
-                name: PRODUCT-SERVICE
-                fallbackuri: forward:/productServiceFallback
             - name: RequestRateLimiter
               args:
                 redis-rate-limiter.replenishRate: 1
                 redis-rate-limiter.burstCapacity: 1
+            - name: AuthenticationFilter
+
         - id: AUTH-SERVICE
           uri: lb://AUTH-SERVICE
           predicates:

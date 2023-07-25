@@ -1,0 +1,25 @@
+            - name: CircuitBreaker
+              args:
+                name: ORDER-SERVICE
+                fallbackuri: forward:/orderServiceFallback
+            - name: RequestRateLimiter
+              args:
+                redis-rate-limiter.replenishRate: 1
+                redis-rate-limiter.burstCapacity: 1
+
+    - name: CircuitBreaker
+      args:
+        name: PRODUCT-SERVICE
+        fallbackuri: forward:/productServiceFallback
+
+**************************
+
+ERROR WHILE CALLING AUTH_VALIDATE TOKEN API FROM CLOUD API USING REST TEMPLATE
+
+ block()/blockFirst()/blockLast() are blocking, which is not supported in thread reactor-http-nio-1
+
+ java.lang.IllegalStateException: block()/blockFirst()/blockLast() are blocking, which is not supported in thread reactor-http-nio-1
+
+ Method threw 'java.lang.IllegalStateException' exception.
+
+ *******************************
