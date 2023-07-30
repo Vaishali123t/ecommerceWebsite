@@ -1,0 +1,18 @@
+Shopping website
+
+1. Frontend
+2. Backend
+	2.1. User registration and login
+	2.2. Wishlist
+	2.3. Cart
+	2.4. Payment gateway
+	2.5. transactions- failure and acceptance
+	2.6. Order confirmation in ui
+	2.7. Order confirmation via mail
+	2.8. Delivery management?
+
+hosting?
+dbs?
+how to not show the url being called from ui?
+api gateway and load balancer?
+
