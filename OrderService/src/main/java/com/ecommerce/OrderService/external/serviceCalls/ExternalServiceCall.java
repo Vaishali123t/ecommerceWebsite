@@ -34,7 +34,7 @@ public class ExternalServiceCall {
     public OrderResponse.ProductDetails getProductDetails(String url,RestTemplate restTemplate){
 
         log.info("restemplate is "+ restTemplate);
-        OrderResponse.ProductDetails response=restTemplate.getForObject(url, OrderResponse.ProductDetails.class);
+        OrderResponse.ProductDetails response= restTemplate.getForObject(url, OrderResponse.ProductDetails.class);
 
         return response;
     }

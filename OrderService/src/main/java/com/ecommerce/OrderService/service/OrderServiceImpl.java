@@ -7,6 +7,7 @@ import com.ecommerce.OrderService.model.ErrorResponse;
 import com.ecommerce.OrderService.model.OrderRequest;
 import com.ecommerce.OrderService.model.OrderResponse;
 import com.ecommerce.OrderService.repository.OrderRepository;
+import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,6 +29,7 @@ public class OrderServiceImpl implements OrderService{
     private RestTemplate restTemplate;
 
     @Override
+//    @CircuitBreaker(name="external", fallbackMethod = "fallback")
     public Long addOrder(OrderRequest orderRequest) {
 
         log.info("Order addition started");
@@ -68,6 +70,7 @@ public class OrderServiceImpl implements OrderService{
     }
 
     @Override
+//    @CircuitBreaker(name="external", fallbackMethod = "fallback")
     public OrderResponse getOrderDetails(long orderId) {
 
         log.info("Getting order details from getOrderDetails");
