@@ -28,6 +28,9 @@ public class OrderServiceImpl implements OrderService{
     @Autowired
     private RestTemplate restTemplate;
 
+    @Autowired
+    private  ExternalServiceCall ex;
+
     @Override
 //    @CircuitBreaker(name="external", fallbackMethod = "fallback")
     public Long addOrder(OrderRequest orderRequest) {
@@ -46,7 +49,7 @@ public class OrderServiceImpl implements OrderService{
 
         String productServiceUrl= "http://PRODUCT-SERVICE/product/reduceQuantity/"+ orderRequest.getProductId()+"/?quantity="+orderRequest.getQuantity();
 
-        ExternalServiceCall ex= new  ExternalServiceCall();
+//        ExternalServiceCall ex= new  ExternalServiceCall();
         ResponseEntity<Void> productServiceResponse= ex.reduceQuantityOfProduct(productServiceUrl,restTemplate);
 
         if(productServiceResponse.getStatusCode().is2xxSuccessful()){
@@ -84,7 +87,7 @@ public class OrderServiceImpl implements OrderService{
         // now call product service to get the name of product
 
         String url= "http://PRODUCT-SERVICE/product/getById/"+productId;
-        ExternalServiceCall ex= new ExternalServiceCall();
+//        ExternalServiceCall ex= new ExternalServiceCall();
 
         OrderResponse.ProductDetails response= ex.getProductDetails(url,restTemplate);
 

@@ -15,11 +15,16 @@ public class OrderServiceApplication {
 		SpringApplication.run(OrderServiceApplication.class, args);
 	}
 
-
 	@Bean
 	@LoadBalanced
 	public RestTemplate getRestTemplate() {
 		return new RestTemplate();
+	}
+
+	@Bean
+	@LoadBalanced
+	public ExternalServiceCall getExternalService(){
+		return new ExternalServiceCall();
 	}
 
 }
