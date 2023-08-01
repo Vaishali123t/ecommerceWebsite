@@ -1,0 +1,21 @@
+spring:
+  datasource:
+    url: jdbc:h2:mem:order
+    username: user
+    password: password
+    driver-class-name: org.h2.Driver
+  jpa:
+    database-platform: org.hibernate.dialect.H2Dialect
+
+
+eureka:
+  instance:
+    hostname: localhost
+    prefer-ip-address: true
+  client:
+    fetch-registry: true
+    register-with-eureka: true
+    service-url:
+      defaultZone: ${defaultZone:http://localhost:8671/eureka}
+  server:
+    port: 8671
