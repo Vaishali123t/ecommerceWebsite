@@ -1,6 +1,7 @@
 package com.ecommerce.OrderService.controller;
 
 import com.ecommerce.OrderService.OrderServiceConfig;
+import com.ecommerce.OrderService.model.OrderRequest;
 import com.ecommerce.OrderService.repository.OrderRepository;
 import com.ecommerce.OrderService.service.OrderService;
 import com.fasterxml.jackson.databind.DeserializationFeature;
@@ -20,6 +21,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.util.StreamUtils;
 
 import java.io.IOException;
@@ -62,6 +64,11 @@ public class OrderControllerTest {
 //    }
 
     private void reduceQuantity() {
+
+        wireMockServer.stubFor(WireMock.put(WireMock.urlMatching("/product/reduceQuantity/.*"))
+                .willReturn(WireMock.aResponse()
+                        .withStatus(HttpStatus.OK.value())
+                        .withHeader("Content-Type", MediaType.APPLICATION_JSON_VALUE)));
     }
 
     private void getProductDetailResponse() throws IOException { // get mock data from product details service
@@ -84,7 +91,21 @@ public class OrderControllerTest {
         // get order by orderid from db and check
 
         // check output
+//
+//        OrderRequest orderRequest= getMockOrderRequest();
+//        MvcResult mvcResult= mockMvc.perform(WireMock.post("/order/placeOrder/")
+//                .content(MediaType.APPLICATION_JSON)
+//        );
 
+    }
+
+    private OrderRequest getMockOrderRequest() {
+        return OrderRequest.builder()
+                .productId(1)
+                .quantity(1)
+                .quantity(1)
+                .amount(200)
+                .build();
     }
 
     @Test

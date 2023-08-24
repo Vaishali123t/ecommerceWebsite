@@ -1,5 +1,6 @@
 package com.ecommerce.OrderService;
 
+import com.ecommerce.OrderService.external.serviceCalls.ExternalServiceCall;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.client.loadbalancer.LoadBalanced;

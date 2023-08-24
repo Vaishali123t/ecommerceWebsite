@@ -136,7 +136,7 @@ class OrderServiceImplTest {
                 .build();
     }
 
-    private Order gerMockOrder() {
+    private Order getMockOrder() {
 
         return Order.builder()
                 .orderStatus("PLACED")
